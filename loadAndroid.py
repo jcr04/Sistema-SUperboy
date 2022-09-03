@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*-coding:utf8;-*-
-
 import os
 import time
 from util import Cronos
@@ -10,7 +7,7 @@ import androidhelper as android
 
 
 class Load:
-    nomeUsu, nomeIa, primeiroUso = "", "", ""  # Inicializando
+    nomeUsu, nomeIa, primeiroUso = "", "", ""  
 
     def __init__(self):
         pass
@@ -25,11 +22,11 @@ class Load:
         return info
 
     def iniciar(self, info):
-        self.nomeUsu = info[0]  # Nome do usuário é a primeria linha do arquivo txt
+        self.nomeUsu = info[0]  
         self.nomeIa = info[1]
-        self.primeiroUso = str(info[2])  # "0" se for o primeiro uso da IA e "1" se não for
+        self.primeiroUso = str(info[2])  
 
-        self.nomeUsu = self.nomeUsu[:-1]  # Retira o caractere "\n" gerado na leitura de arquivos txt
+        self.nomeUsu = self.nomeUsu[:-1]  
         self.nomeIa = self.nomeIa[:-1]
 
         if "0" in self.primeiroUso:
@@ -42,15 +39,15 @@ class Load:
             while self.nomeIa is None:
                 self.nomeIa = droid.dialogGetInput("Nome da IA", "Insira um nome").result
 
-            os.chdir(os.path.dirname(os.path.abspath(__file__)))  # Aponta para o caminho da pasta da IA
-            caminho = os.getcwd() + "/infos.txt"  # Monta o caminho do txt das informações
+            os.chdir(os.path.dirname(os.path.abspath(__file__)))  
+            caminho = os.getcwd() + "/infos.txt"  
 
             arq = open(caminho, 'w')
             arq.writelines(self.nomeUsu + "\n" + self.nomeIa + "\n" + "1 \n")
             arq.close()
 
         cronos = Cronos()
-        saudacao_gerada = str(cronos.tempo()[0] + " " + self.nomeUsu)  # Saudação: Periodo do dia + Nome do usuário
-        time.sleep(1)  # Um leve delay para o carregamento dos arquivos
+        saudacao_gerada = str(cronos.tempo()[0] + " " + self.nomeUsu)  
+        time.sleep(1)  
 
         return saudacao_gerada
