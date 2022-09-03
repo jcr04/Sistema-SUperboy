@@ -1,11 +1,3 @@
-#-*-coding:utf8;-*-
-# Junior Obom
-# 28/06/2018
-# Classe responsável por receber uma frase ou palavra e realizar
-# uma busca na internet, mais precisamente utilizando o Google.
-# O o site de busca pode ser modificado e adaptado no futuro para outras aplicações
-
-
 import urllib.request
 from unicodedata import normalize
 
@@ -16,14 +8,14 @@ class BuscaWeb(object):
     def __init__(self):
         pass
 
-    def gerarUrl(self,chave): # Recebe uma palavara ou frase chave e a prepara para busca
-        textoBusca = chave.replace(" ","+") # No lugar dos espaços vamos colocar sinais de adição "+" pois é assim que a url de busca do google deve ser montada
+    def gerarUrl(self,chave): 
+        textoBusca = chave.replace(" ","+") 
         
         url = str("https://www.google.com.br/search?q="+textoBusca)
         #print(url)
         return url
     
-    def busca(self,url): # Faz uma busca com a URL e devolve o HTML da página
+    def busca(self,url): 
         headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:23.0) Gecko/20100101 Firefox/23.0','Accept-Charset':'utf-8'}  
 
         req = urllib.request.Request(url, headers = headers)   
@@ -34,19 +26,19 @@ class BuscaWeb(object):
         return retorno
 
     def remover_acentos(self,txt, codif='utf-8'):
-        txt=txt.encode('utf-8') # Para usar o "decode" em uma str é preciso fazer isso antes
+        txt=txt.encode('utf-8') 
         semAce = str(normalize('NFKD', txt.decode(codif)).encode('ASCII', 'ignore'))   
-        semAce=semAce[2:len(semAce)-1] # Tirando os dois primeiros caracteres para que a string seja correspondente com a original
+        semAce=semAce[2:len(semAce)-1] 
         print(semAce) 
         return semAce
 
-    def responder(self,html): # Vai devolver qual o tipo da pesquisa e a resposta
+    def responder(self,html): 
 
         codTipos = ["""class="Z0LcW">""",
             """data-dobid="dfn"><span>""",
             """class="vk_gy vk_sh">""",
                       
-            """class="ILfuVd yZ8quc c3biWd">""", # Essa ordem é importante
+            """class="ILfuVd yZ8quc c3biWd">""", #importante
             """class="ILfuVd yZ8quc">""",
 
             """id="knowledge-currency__tgt-amount">""",
@@ -60,7 +52,7 @@ class BuscaWeb(object):
             "descobrimento 2",
             "descobriento 1",
                 
-            "dolar",
+            
             "calcular",
             "tradução"]
 
@@ -70,20 +62,20 @@ class BuscaWeb(object):
             if(ct in html):
                 if (tipos[codTipos.index(ct)] == "que dia é"):
                     if( """class="dDoNo vk_bk">""" in html):                        
-                        ct2 = """class="dDoNo vk_bk">""" # Dolar
+                        ct2 = """class="dDoNo vk_bk">"""
                        
                         break
                 ct2 = ct
                 break
             
         try: 
-            html = html[(html.index(ct2)+len(ct2)):len(html)] # Tudo que vier antes
-            html = html.replace("<b>","") # Texto enfáticos que poderiam atrapalhar o próximo racioncínio
-            html = html.replace("</b>","") # Texto enfáticos que poderiam atrapalhar o próximo racioncínio
+            html = html[(html.index(ct2)+len(ct2)):len(html)] 
+            html = html.replace("<b>","") 
+            html = html.replace("</b>","") 
 
-            resposta = html[0:html.index("<")] # Tudo que vier depois                 
+            resposta = html[0:html.index("<")]                  
 
-        finally: # Caso haja algum possível erro na busca
+        finally: 
             
             return resposta
 
@@ -102,16 +94,7 @@ class BuscaWeb(object):
             resultado = "não foi possivel concluir a busca"
             return resultado, False
             
-                   
-"""
-# Uso
-cb = BuscaWeb()
-resultado = cb.start("dolar")
-print(resultado[0])
-"""
-
-
-
+               
 
 
 
