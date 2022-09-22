@@ -1,6 +1,3 @@
-# Junior Obom
-# 15/07/2018
-
 print("Start")
 
 import sqlite3
