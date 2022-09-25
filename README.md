@@ -2,7 +2,8 @@
 sistema de facilitação de manuseio para PCD (pessoas com deficiencia)
 
 # Instalação
-Para funcionar, a pasta "Superboy" deve ficar no diretório do aplicativo.
+Para funcionar, a pasta "Superboy" deve ficar no diretório do aplicativo 
+clique aqui para saber mais: https://www.youtube.com/watch?v=NTpkMhvod0Q&list=PLgkr0bcGnH6YtPQO1774MBPhJB4tVBk8L&index=40
 
 # Objetivos
 - Trabalhar com reconhecimento de fala Android.
