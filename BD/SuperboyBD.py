@@ -3,7 +3,7 @@ print("Start")
 import sqlite3
 
 os.chdir(os.path.dirname(os.path.abspath(__file__))) # Aponta para o caminho da pasta da IA
-caminho=os.getcwd()+"/IADoxoBD.db" # Monta o caminho do txt de infos
+caminho=os.getcwd()+"/SuperboyBD.db" # Monta o caminho do txt de infos
 
 conn = sqlite3.connect(caminho) # Conectando ao banco de dados
 cursor = conn.cursor() # Definindo cursor do BD
