@@ -97,7 +97,7 @@ class Arquivo(object):
     def __init__(self):
         pass
 
-    def criar(self, nomearquivo, texto="Junior\nAIA\n0\n"):
+    def criar(self, nomearquivo, texto="Dev\Superboy\n0\n"):
         os.chdir(os.path.dirname(os.path.abspath(__file__)))  
         caminho = os.getcwd()
         arq = open(caminho + nomearquivo, "w+")
