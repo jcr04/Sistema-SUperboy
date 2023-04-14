@@ -4,47 +4,62 @@ from paciencia import Paciencia
 from classificador import Classificador
 from buscaWeb import BuscaWeb
 
-class Chatbot():
-    entradasrecentes=[]
-
+class Chatbot:
     def __init__(self):
-        pass
+        self.data = {}
 
-    def interagir(self, entrada, log=[] ): 
-       
-        cl=Classificador()
-        entrada=cl.normalizar(entrada) 
+    def train(self, inputs, outputs):
+        for i in inputs:
+            self.data[i] = outputs[inputs.index(i)]
+        self.save()
 
-        resposta = "Infelizmente não tenho nenhuma resposta para isso" 
+    def save(self):
+        with open("data.txt", "w") as f:
+            for i in self.data:
+                f.write(i + ":" + self.data[i] + "\n")
 
-	   
-        if("pare" == entrada or "sair" in entrada): exit() 
+    def load(self):
+        with open("data.txt", "r") as f:
+            for line in f:
+                parts = line.strip().split(":")
+                self.data[parts[0]] = parts[1]
 
-         
-        paciencia=Paciencia() 
-        resp=paciencia.ent_rep(self.entradasrecentes,entrada)
-        if(resp[1]==True):  
-            self.entradasrecentes=[]
-            return resp 
-        self.entradasrecentes.append(entrada) 
+    def normalize(self, text):
+        return text.lower()
 
+    def respond(self, text):
+        text = self.normalize(text)
+        if text in self.data:
+            return self.data[text], True
+        else:
+            response = "Desculpe, não entendi o que você disse."
+            return response, False
 
-        
-        repita=["repita", "repete", "o que você disse", "repete por favor"]
-        
-        for r in repita:
-            if(r==entrada and len(log)!=0): 
-                
-                return log[len(log)-1][1],True
-            
-        
-        numop=cl.idacao(entrada)
-        if(numop[0]!=0):    
-            resp=cl.execacao(entrada,numop)
-            if(resp[0]!=0):
-                return resp,True
-                     
-        
+    def learn(self, text):
+        response = ""
+        while response == "":
+            response = input("Qual é a resposta para " + text + "? ")
+        self.data[self.normalize(text)] = response
+        self.save()
+        return "Obrigado por me ensinar!"
+
+    def run(self):
+        self.load()
+        print("Olá, sou o Chatbot. O que você quer saber?")
+
+        while True:
+            text = input("> ")
+            if text.lower() in ["sair", "pare"]:
+                print("Até mais!")
+                break
+            elif text.lower() in ["ajuda", "help"]:
+                print("Digite uma pergunta ou frase, e eu tentarei responder da melhor forma possível.")
+            elif text.lower() in ["aprender", "ensinar"]:
+                text = input("Qual é a pergunta que você quer ensinar? ")
+                print(self.learn(text))
+            else:
+                response, success = self.respond(text)
+                print(response)       
         
         arq=Arquivo()
 
